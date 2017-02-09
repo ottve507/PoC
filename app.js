@@ -3,6 +3,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbs = require('express-handlebars');
+var ejs = require('ejs');
+var engine = require('ejs-locals');
 var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
@@ -24,9 +26,18 @@ var apiUsers = require('./routes/apiUsers');
 var app = express();
 
 //View engine
+//app.set('views', __dirname + '/views');
 app.set('views', path.join(__dirname,'views'));
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-app.set('view engine' , 'handlebars');
+//app.set('view options', { layout: 'layout' });
+//app.engine('ejs', require('ejs').renderFile);
+
+//app.set('view options', { layout: 'layout' });
+//app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+app.set('view options', { layout:'layouts/layout.ejs' });
+
+//app.set('view engine' , 'handlebars');
 
 // BodyParser Middleware
 app.use(bodyParser.json());
