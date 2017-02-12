@@ -2,7 +2,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
 var ejs = require('ejs');
 var engine = require('ejs-locals');
 var expressValidator = require('express-validator');
@@ -14,38 +13,12 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var config = require('./config/main');
 
+//Setting up database to use
 mongoose.connect('mongodb://localhost/backendserver');
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var posts = require('./routes/posts', db);
-var apiUsers = require('./routes/apiUsers'); 
-
 //initalise app
 var app = express();
-
-//View engine
-//app.set('views', __dirname + '/views');
-app.set('views', path.join(__dirname,'views'));
-//app.set('view options', { layout: 'layout' });
-//app.engine('ejs', require('ejs').renderFile);
-
-//app.set('view options', { layout: 'layout' });
-//app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-app.engine('ejs', engine);
-app.set('view engine', 'ejs');
-app.set('view options', { layout:'layouts/layout.ejs' });
-
-//app.set('view engine' , 'handlebars');
-
-// BodyParser Middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-// Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Express Session
 app.use(session({
@@ -53,6 +26,20 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
+
+//View engine
+app.set('views', path.join(__dirname,'views'));
+app.engine('ejs', engine);
+app.set('view engine', 'ejs');
+app.set('view options', { layout:'layouts/layout.ejs' });
+
+// BodyParser Middleware (makes req.body possible)
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Passport init
 app.use(passport.initialize());
@@ -76,7 +63,7 @@ app.use(expressValidator({
   }
 }));
 
-// Connect Flash
+// Connect Flash (show flash message e.g. you logged in)
 app.use(flash());
 
 // Global Vars
@@ -89,19 +76,21 @@ app.use(function (req, res, next) {
   next();
 });
 
+//Setting up routes
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var posts = require('./routes/posts', db);
+var apiUsers = require('./routes/apiUsers');
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/apiUsers', apiUsers);
 
-
-// Set Port
+// Set Port and start server
 app.set('port', (process.env.PORT || 3000));
-
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
-
 
 

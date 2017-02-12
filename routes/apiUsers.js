@@ -8,20 +8,16 @@ var config = require('../config/main');
 
 var User = require('../models/user');
 
-
 router.post('/login', function(req, res) {
 	console.log(req.body)
-    //User.getUserByUsername(req.body.username, function(err, user) {
 	  User.findOne({username: req.body.username}, function(err, user) {
       if (err) throw err;
 
       if (!user) {
-		console.log(user)
         res.send({ success: false, message: 'Authentication failed. User not found.' });
       } else {
         // Check if password matches
 		User.comparePassword(req.body.password, user.password, function(err, isMatch){
-        //user.comparePassword(req.body.password, function(err, isMatch) {
           if (isMatch && !err) {
             // Create token if the password matched and no error was thrown
             var token = jwt.sign(user, config.secret, {
