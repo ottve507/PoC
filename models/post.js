@@ -3,6 +3,7 @@ var bcrypt = require('bcryptjs');
 
 // Post Schema
 var PostSchema = mongoose.Schema({
+	user: {type: mongoose.Schema.ObjectId, ref: 'User'},
 	name: {
 		type: String,
 		index:true

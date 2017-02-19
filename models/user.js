@@ -19,7 +19,8 @@ var UserSchema = mongoose.Schema({
 	facebook : {
 	        id           : String,
 	        token        : String
-	    }
+	    },
+	posts : [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);
