@@ -2,23 +2,23 @@
 <ul class="quotes">
 	<%posts.forEach(function(element){%>
         <li>
-			<a href="/posts/post/<%= element._id %>">
+			<a href="/posts/<%= element._id %>">
 			<%=element.name%></a> <br>
 			<%=element.text%> <br>
+			<%=element.address%> <br>
 			<%=element.user.username  %>
 		</li>
 		<br>
      <%});%>
 </ul>
 
-<br>HEj
-
-hej
+:)
 
 <% if(user) { %>
 <form action="/posts/post" method="POST">
-  <input type="text" placeholder="name" name="name">
-  <input type="text" placeholder="text" name="text">
+  <input type="text" placeholder="title" name="name">
+  <input type="text" placeholder="description" name="text">
+  <input type="text" placeholder="address" name="address">
   <button type="submit">Submit</button>
 </form>
 <% } %>

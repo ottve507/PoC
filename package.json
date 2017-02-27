@@ -26,6 +26,7 @@
     "passport-http": "*",
     "passport-local": "*",
 	"passport-facebook": "*",
-    "jsonwebtoken": "*"
+    "jsonwebtoken": "*",
+	"node-geocoder": "*"
   }
 }

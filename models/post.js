@@ -4,6 +4,16 @@ var bcrypt = require('bcryptjs');
 // Post Schema
 var PostSchema = mongoose.Schema({
 	user: {type: mongoose.Schema.ObjectId, ref: 'User'},
+	//location: {type: [Number], required: true},
+	latitude: {
+		type: Number
+	},
+	longitude: {
+		type: Number
+	},
+	address: {
+		type: String
+	},
 	name: {
 		type: String,
 		index:true

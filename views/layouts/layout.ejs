@@ -13,10 +13,12 @@
 			
             <% if(user) { %>
               <li role="presentation"><a href="/">Dashboard </a> |</li>
+			  <li role="presentation"><a href="/posts/post">Posts </a> |</li>
               <li role="presentation"><a href="/users/logout"> Logout</a> </li>
             <% } else { %>
               <li role="presentation"><a href="/users/login">Login </a> |</li>
 			  <li role="presentation"><a href="/users/auth/facebook"> Login with Facebook </a> |</li>
+			  <li role="presentation"><a href="/posts/post">Posts </a> |</li>
               <li role="presentation"><a href="/users/register"> Register</a></li>
             <% } %>
           </ul>
@@ -37,7 +39,6 @@
           <% } %>
 
           <% if(error != "") { %>
-			ff
             <div class="alert alert-danger"><%=error%></div>
           <% } %>
           
